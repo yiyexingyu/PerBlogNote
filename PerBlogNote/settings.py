@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -26,19 +25,24 @@ SECRET_KEY = '9v+!_uwryksli%#n(e+ky)x4^b861&f6ix_7#^g)fpfq$zk)_5'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
-
 INSTALLED_APPS = [
+    'simpleui',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'import_export',
+    'mdeditor',
+    'apps.blog',
+    'pure_pagination',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -55,7 +59,7 @@ ROOT_URLCONF = 'PerBlogNote.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -63,6 +67,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -76,8 +81,11 @@ WSGI_APPLICATION = 'PerBlogNote.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'personal_blog',
+        'USER': 'root',
+        'PASSWORD': 'hesx@0670131005',
+        'HOST': '127.0.0.1'
     }
 }
 
@@ -117,5 +125,68 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
-
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static'),
+# ]
+
+MEDIA_URL = '/medias/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "medias")
+
+
+# 网站的基本信息配置
+SITE_NAME = '沐叶'  # 站点名称
+SITE_DESCRIPTION = '沐叶的生活学习博客'  # 站点描述
+SITE_KEYWORDS = '沐叶,编程,python,django,android,学习'  # 站点关键词
+SITE_TITLE = '学习与生活，编程与人生'  # 博客标题
+SITE_TYPE_CHINESE = '宁静致远'  # 打字效果 中文内容
+SITE_TYPE_ENGLISH = 'The quieter you become, the more you are able to hear'  # 打字效果 英文内容
+SITE_MAIL = 'yiyexingyu@sina.com'  # 我的邮箱
+SITE_ICP = '京ICP备20008204号-1'  # 网站备案号
+SITE_ICP_URL = 'http://beian.miit.gov.cn'  # 备案号超链接地址
+SITE_URL = 'http://blog.yiyexingyu.com/'
+
+# Simple Ui 相关设置
+SIMPLEUI_LOGIN_PARTICLES = False
+SIMPLEUI_ANALYSIS = False
+SIMPLEUI_STATIC_OFFLINE = False
+SIMPLEUI_LOADING = False
+SIMPLEUI_LOGO = 'http://himg.bdimg.com/sys/portrait/item/6a1ae4b880e58fb6e6989fe7bebda6b8.jpg'
+
+# 后台MarkDown编辑器配置
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+# 日志记录
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format' :"[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            'datefmt' :"%d/%b/%Y %H:%M:%S"
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'mysite.log',
+            'formatter': 'verbose'
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'propagate': True,
+            'level': 'DEBUG',
+        },
+        'blog': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+        },
+    }
+}
