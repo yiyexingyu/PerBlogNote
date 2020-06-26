@@ -56,7 +56,7 @@ urlpatterns = [
 
     # 静态文件
     re_path(r'^medias/(?P<path>.*)', serve, {'document_root': settings.MEDIA_ROOT}, name="media"),
-    re_path(r'^static/(?P<path>.*)$',serve, {'document_root': settings.STATIC_ROOT}, name='static')
+    # re_path(r'^static/(?P<path>.*)',serve, {'document_root': settings.STATIC_ROOT}, name='static')
 ]
 
 if settings.DEBUG:
