@@ -92,26 +92,7 @@
         }
         return val
     }
-    window.simple_call = function (data) {
 
-        var o = __simpleui_version.replace(/\./g, '');
-        var n = data.data.name.replace(/\./g, '');
-        while(o.length!=3){
-            o += '0';
-        }
-        while(n.length!=3){
-            n += '0';
-        }
-        var oldVersion = parseInt(o)
-        var newVersion = parseInt(n)
-        var body = data.data.body;
-        if (oldVersion < newVersion) {
-            app.upgrade.isUpdate = true;
-            app.upgrade.body = body;
-            app.upgrade.version = data.data.name;
-
-        }
-    }
     new Vue({
         el: '#main',
         data: {
@@ -411,7 +392,7 @@
                 var index = item.index;
                 this.menuActive = String(index);
                 this.breadcrumbs = item.breadcrumbs;
-                if (index == '1') {
+                if (tab.index == '0') {
                     item.url = '/'
                 }
                 changeUrl(item);
@@ -591,7 +572,11 @@
             },
             report: function (url) {
                 if (!url) {
-                    url = 'https://github.com/newpanjing/simpleui/issues';
+                    if ($("html").lang) {
+                        url = 'https://simpleui.88cto.com';
+                    } else {
+                        url = 'https://github.com/newpanjing/simpleui/issues';
+                    }
                 }
                 window.open(url);
             }
