@@ -59,6 +59,11 @@ urlpatterns = [
     # re_path(r'^static/(?P<path>.*)',serve, {'document_root': settings.STATIC_ROOT}, name='static')
 ]
 
+# 设置后台名称
+admin.site.site_header = '沐叶博客后台'
+admin.site.site_title = '沐叶博客后台'
+
+
 if settings.DEBUG:
     from django.conf.urls.static import static
 
